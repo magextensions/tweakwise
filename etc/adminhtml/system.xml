@@ -1,0 +1,282 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Tweakwise & Emico (https://www.tweakwise.com/ & https://www.emico.nl/) - All Rights Reserved
+ *
+ * @copyright Copyright (c) 2017-2017 Tweakwise.com B.V. (https://www.tweakwise.com)
+ * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="tweakwise">
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <comment>Tweakwise version v4.2.2</comment>
+                <field id="authentication_key" translate="label,comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Authentication key</label>
+                    <comment>Provided by Tweakwise (8 alphanumeric characters)</comment>
+                    <validate>required-entry validate-alphanum</validate>
+                </field>
+            </group>
+            <group id="layered" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Layered navigation</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="hide_single_option" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Hide facets with only one option</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="default_link_renderer" translate="label,comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use default magento filter renderer</label>
+                    <comment>use this only when you are not planning to use ajax filtering, filter forms or seo options. When filter type is link, checkbox or color (swatches) the default Magento renderer can be used. Filter display settings like: collapsed / collapsible, more / less text, css class and show product count are then ignored.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="ajax_filters" translate="label" type="select" sortOrder="45" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Ajax filtering</label>
+                    <comment>When enabled non category filter results will be fetched via ajax instead of navigation</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                        <field id="default_link_renderer">0</field>
+                    </depends>
+                </field>
+                <field id="form_filters" translate="label,comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Filter form</label>
+                    <comment>Renders filter links in a form and renders a button with the filters. When this button is clicked all selected filters are applied</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="default_link_renderer">0</field>
+                    </depends>
+                </field>
+                <field id="query_filter_type" translate="label,comment" type="select" sortOrder="55" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Filter url query arguments</label>
+                    <comment>Url's rendered by tweakwise for filter contain all the arguments in the request url. These query arguments can be filtered out with this setting.</comment>
+                    <source_model>Emico\Tweakwise\Model\Config\Source\QueryFilterType</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="query_filter_arguments" translate="label,comment" type="textarea" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Filter url query arguments</label>
+                    <comment>Specific query arguments to filter out. One argument per line</comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                        <field id="query_filter_type">specific</field>
+                    </depends>
+                </field>
+                <field id="query_filter_regex" translate="label,comment" type="text" sortOrder="65" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Filter url query regex</label>
+                    <comment>Arguments matching regex will be filtered</comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                        <field id="query_filter_type">regex</field>
+                    </depends>
+                </field>
+                <field id="url_strategy" translate="label,comment" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>URL strategy</label>
+                    <comment>Specify how you want the filter URL's to be build</comment>
+                    <source_model>Emico\Tweakwise\Model\Config\Source\UrlStrategy</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="seo" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <depends>
+                    <field id="tweakwise/layered/default_link_renderer">0</field>
+                </depends>
+                <label>Seo</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="filter_whitelist" translate="label" type="textarea" sortOrder="20" showInStore="1" showInWebsite="1" showInDefault="1">
+                    <label>Filter Whitelist</label>
+                    <comment>Attributes whose filters should be indexable, add the filter codes (as seen in navigator) comma separated</comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="filter_values_whitelist" translate="label" type="textarea" sortOrder="30" showInStore="1" showInWebsite="1" showInDefault="1">
+                    <label>Filter Values Whitelist</label>
+                    <comment>
+                        Attributes whose filter values should be indexable.
+                        Add the filter and its value (as seen in navigator) comma separated.
+                        For example: size=xs,size=s,size=m
+                    </comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="max_allowed_facets" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Max allowed selected filter</label>
+                    <comment>Max allowed filters before rendering filters as not indexable</comment>
+                    <validate>validate-number</validate>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="autocomplete" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Autocomplete</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="use_suggestions" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use Suggestions Autocomplete</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Use default autocomplete (No) or use the new suggestion api (Yes) </comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="show_products" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show products</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                        <field id="use_suggestions">0</field>
+                    </depends>
+                </field>
+                <field id="show_suggestions" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show suggestions</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                        <field id="use_suggestions">0</field>
+                    </depends>
+                </field>
+                <field id="show_parent_category" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show parent category</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                        <field id="show_suggestions">1</field>
+                    </depends>
+                </field>
+                <field id="in_current_category" translate="label,comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Stay in category</label>
+                    <comment>Filter autocomplete search results to currently viewed category</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="max_results" translate="label,comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Maximum number of results</label>
+                    <validate>integer validate-greater-than-zero</validate>
+                    <comment>Maximum number of results to show, suggestions and products combined.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                        <field id="use_suggestions">0</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="search" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Search</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="template" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Tweakwise search template to use in search results</label>
+                    <source_model>Emico\Tweakwise\Model\Config\Source\FilterTemplate</source_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="language" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Search language</label>
+                    <source_model>Emico\Tweakwise\Model\Config\Source\Language</source_model>
+                    <comment>Language for search, used to keep track of word conjugations. For example searching for "bed" wil also yield results matching "beds" if english is selected.</comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="personal_merchandising" translate="label" type="text" sortOrder="55" showInDefault="1" showInWebsite="1" showInStore="1">
+                <depends>
+                    <field id="tweakwise/layered/ajax_filters">1</field>
+                </depends>
+                <label>Personal Merchandising</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Note that enabling this can have impact on performance, caching of ajax filter requests will be disabled for requests which have a profile cookie value (see Cookie name setting below)</comment>
+                </field>
+                <field id="cookie_name" translate="label,comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Cookie name</label>
+                    <comment>Name of cookie which holds tweakwise profile information, this is usually set in the tweakwise measure script.</comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="recommendations" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Recommendations</label>
+                <field id="crosssell_enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Crosssell enabled</label>
+                    <comment>Shows crosssell product on all product pages. This overrides the default related products. Can also be enabled per category.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="crosssell_template" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default crosssell template</label>
+                    <source_model>Emico\Tweakwise\Model\Config\Source\RecommendationOption\Product\System</source_model>
+                    <depends>
+                        <field id="crosssell_enabled">1</field>
+                    </depends>
+                </field>
+                <field id="crosssell_group_code" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default crosssell group code</label>
+                    <depends>
+                        <field id="crosssell_enabled">1</field>
+                        <field id="crosssell_template">-1</field>
+                    </depends>
+                </field>
+                <field id="upsell_enabled" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Upsell enabled</label>
+                    <comment>Shows upsell product on all product pages. This overrides the default upsell products. Can also be enabled per category.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="upsell_template" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default upsell template</label>
+                    <source_model>Emico\Tweakwise\Model\Config\Source\RecommendationOption\Product\System</source_model>
+                    <depends>
+                        <field id="upsell_enabled">1</field>
+                    </depends>
+                </field>
+                <field id="upsell_group_code" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default upsell group code</label>
+                    <depends>
+                        <field id="upsell_enabled">1</field>
+                        <field id="upsell_template">-1</field>
+                    </depends>
+                </field>
+                <field id="featured_enabled" translate="label" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Featured products enabled</label>
+                    <comment>Shows featured product on all category pages. Can also be enabled per category.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="featured_template" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default featured product template</label>
+                    <source_model>Emico\Tweakwise\Model\Config\Source\RecommendationOption\Featured</source_model>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="featured_enabled">1</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

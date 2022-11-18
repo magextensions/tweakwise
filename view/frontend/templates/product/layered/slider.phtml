@@ -1,0 +1,77 @@
+<?php
+/**
+ * Tweakwise & Emico (https://www.tweakwise.com/ & https://www.emico.nl/) - All Rights Reserved
+ *
+ * @copyright Copyright (c) 2017-2017 Tweakwise.com B.V. (https://www.tweakwise.com)
+ * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+use Emico\Tweakwise\Block\LayeredNavigation\RenderLayered\SliderRenderer;
+
+/** @var $block SliderRenderer */
+$itemPrefix = $block->getItemPrefix();
+$itemPostfix = $block->getItemPostfix();
+$urlKey = $block->getUrlKey();
+$minValue = $block->getMinValue();
+$maxValue = $block->getMaxValue();
+$currentMinValue = $block->getCurrentMinValue();
+$currentMaxValue = $block->getCurrentMaxValue();
+$sliderUrlInputValue = sprintf('%s-%s', $currentMinValue, $currentMaxValue);
+$disabledSliderUrlInputValue = sprintf('%s-%s', $minValue, $maxValue);
+?>
+<div class="slider-attribute" id="attribute-slider-<?=$block->getCssId()?>">
+    <div class="labels">
+        <span class="min-value">
+            <span class="prefix"><?= $itemPrefix ?></span>
+            <?=$block->renderValue($minValue)?>
+            <span class="postfix"><?= $itemPostfix ?></span>
+        </span>
+        <span class="max-value">
+            <span class="prefix"><?= $itemPrefix ?></span>
+            <?=$block->renderValue($maxValue)?>
+            <span class="postfix"><?= $itemPostfix ?></span>
+        </span>
+    </div>
+    <div class="slider" data-mage-init="<?=$block->escapeHtmlAttr($block->getJsSliderConfig())?>"></div>
+    <div class="labels">
+        <span class="current-min-value">
+            <span class="prefix"><?= $itemPrefix ?></span>
+            <?= $block->renderValue($currentMinValue)?>
+            <span class="postfix"><?= $itemPostfix ?></span>
+        </span>
+        <span class="current-max-value">
+            <span class="prefix"><?= $itemPrefix ?></span>
+            <?=$block->renderValue($currentMaxValue)?>
+            <span class="postfix"><?= $itemPostfix ?></span>
+        </span>
+    </div>
+    <div class="slider-inputs">
+        <div class="slider-min-wrapper">
+            <label for="<?= $urlKey ?>-min"><?=__('From')?></label>
+            <input type="text"
+                   class="slider-min js-skip-submit"
+                   id="<?= $urlKey ?>-min"
+                   name="<?= $urlKey ?>-min"
+                   value="<?= $currentMinValue ?>"
+            >
+        </div>
+        <div class="slider-max-wrapper">
+            <label for="<?= $urlKey ?>-max"><?=__('To')?></label>
+            <input type="text"
+                   class="slider-max js-skip-submit"
+                   id="<?= $urlKey ?>-max"
+                   name="<?= $urlKey ?>-max"
+                   value="<?= $currentMaxValue ?>"
+            >
+        </div>
+        <input type="hidden"
+               data-disabled-input="<?=$disabledSliderUrlInputValue?>"
+               <?php if ($sliderUrlInputValue === $disabledSliderUrlInputValue):?>
+               disabled="disabled"
+               <?php endif;?>
+               id="<?=$block->getCssId()?>"
+               class="slider-url-value"
+               name="<?= $urlKey ?>"
+               value="<?=$sliderUrlInputValue?>"
+        >
+    </div>
+</div>

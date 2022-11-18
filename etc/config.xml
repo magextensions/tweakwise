@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Tweakwise & Emico (https://www.tweakwise.com/ & https://www.emico.nl/) - All Rights Reserved
+ *
+ * @copyright Copyright (c) 2017-2017 Tweakwise.com B.V. (https://www.tweakwise.com)
+ * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <tweakwise>
+            <general>
+                <authentication_key/>
+                <server_url>https://gateway.tweakwisenavigator.com/</server_url>
+                <log>0</log>
+                <log_developer>1</log_developer>
+                <timeout>10</timeout>
+            </general>
+            <layered>
+                <enabled>0</enabled>
+                <hide_single_option>1</hide_single_option>
+                <default_link_renderer>1</default_link_renderer>
+                <query_filter_type>none</query_filter_type>
+                <query_filter_arguments><![CDATA[umts
+cid
+]]></query_filter_arguments>
+                <query_filter_regex>^__</query_filter_regex>
+            </layered>
+            <autocomplete>
+                <enabled>0</enabled>
+                <use_suggestions>0</use_suggestions>
+                <show_products>1</show_products>
+                <show_categories>1</show_categories>
+                <show_parent_category>0</show_parent_category>
+                <in_current_category>0</in_current_category>
+                <max_results>50</max_results>
+            </autocomplete>
+            <search>
+                <enabled>0</enabled>
+                <template/>
+            </search>
+            <recommendations>
+                <crosssell_enabled>0</crosssell_enabled>
+                <crosssell_template />
+                <upsell_enabled>0</upsell_enabled>
+                <upsell_template />
+                <featured_enabled>0</featured_enabled>
+                <featured_template />
+                <featured_location>before</featured_location>
+            </recommendations>
+        </tweakwise>
+    </default>
+</config>

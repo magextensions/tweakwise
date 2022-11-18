@@ -1,0 +1,5 @@
+grumphp:
+    tasks:
+        composer_script:
+            script: docheader
+            triggered_by: [php, phtml, xml]
